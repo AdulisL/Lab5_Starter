@@ -8,7 +8,6 @@ var image;
 var playButton;
 var audio;
 
-
 // init is used to define variables after DOM loads
 function init() {
   //var expose = document.getElementsByClassName("expose");
@@ -28,15 +27,15 @@ function hornChangeEvent(selection) {
   switch (selection.target.value) {
     case 'air-horn':
       changeImage(image, assets/images/air-horn.svg); 
-      changeAudio(audio, assets/assets/air-horn.mp3);
+      changeAudio(audio, assets/audio/air-horn.mp3);
       break;
     case 'car-horn':
       changeImage(image, assets/images/car-horn.svg);
-      changeAudio(audio, assets/assets/car-horn.mp3);
+      changeAudio(audio, assets/audio/car-horn.mp3);
       break;
     case 'party-horn':
       changeImage(image, assets/images/party-horn.svg);
-      changeAudio(audio, assets/assets/party-horn.mp3); 
+      changeAudio(audio, assets/audio/party-horn.mp3); 
       break;
     default:
       return;
