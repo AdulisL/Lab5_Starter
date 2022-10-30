@@ -18,19 +18,25 @@ function init() {
   // Initalize Text Area
   var txtArea = document.getElementById('text-to-speak');
 
-  // Populate <option> with Browser Defaults
-  // var parentElement = option;      // POSSIBLY REMOVE !!!!!
-  var parentElement = voiceSelect;
-  speechSynthesis.getVoices().forEach(function(voice) {
-    var childElement = document.createElement("option");
-    var childText = document.createTextNode(voice.name);
+  /** Populate the list of Voices in <option> with Browser Defaults
+   *    -An event listener is necessary here because the voices
+   *    actually load after the DOM, so if you don't wait the
+   *    voice array will be empty.
+   */
+  window.speechSynthesis.addEventListener("voiceschanged", function() {
+    // var parentElement = option;      // POSSIBLY REMOVE !!!!!
+    var parentElement = voiceSelect;
+    window.speechSynthesis.getVoices().forEach(function(voice) {
+      var childElement = document.createElement("option");
+      var childText = document.createTextNode(voice.name);
 
-    // Add Attribute & Selector Text to Child Element List
-    childElement.setAttribute("value", voice.name);
-    childElement.appendChild(childText);
-    
-    // Add Child Element to Voice Selecter List
-    parentElement.appendChild(childElement);
+      // Add Attribute & Selector Text to Child Element List
+      childElement.setAttribute("value", voice.name);
+      childElement.appendChild(childText);
+      
+      // Add Child Element to Voice Selecter List
+      parentElement.appendChild(childElement);
+    });
   });
   
   /* Update Current Voice Selection Event Listener.
@@ -63,7 +69,7 @@ function init() {
    *   and opens the mouth emoji.
    */
   text2Speech.addEventListener('start', function() {
-    mouthEmoji.src = 'assets/images/smiling-open.svg';
+    mouthEmoji.src = 'assets/images/smiling-open.png';
   });
 
   /** Close Mouth Emoji at End
@@ -71,6 +77,6 @@ function init() {
    *   and closes the mouth emoji.
    */
   text2Speech.addEventListener('end', function() {
-    mouthEmoji.src = 'assets/images/smiling.svg';
+    mouthEmoji.src = 'assets/images/smiling.png';
   });
 };
