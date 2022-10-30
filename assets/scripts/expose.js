@@ -11,21 +11,30 @@ var audio;
 // init is used to define variables after DOM loads
 function init() {
   //var expose = document.getElementsByClassName("expose");
-  hornSelection = document.getElementById("horn-select");
-  image = document.querySelector("[type='img']");
+  // hornSelection = document.getElementById('horn-select');
+  let horn = document.getElementById('horn-select');
+  image = document.querySelector(".air-horn");
   playButton = document.querySelector("[type='button']");
   audio = document.querySelector("[type='audio']");
+  
 
   // Event Listeners
-  hornSelection.addEventListener('change', hornChangeEvent(selection));
-  playButton.addEventListener('click', clickPlayButton());
+  hornSelection.addEventListener("image", function () {
+    // hornChangeEvent(e);
+    if (horn.target.value == "air-horn") {
+      image.src = assets/images/air-horn.svg;
+    }
+  });
+  // playButton.addEventListener('playButton', clickPlayButton);
 }
 
 //Horn Selection Changed
-function hornChangeEvent(selection) {
+function hornChangeEvent(e) {
   // Change Image & Audio Based on Selection Value
-  switch (selection.target.value) {
+  e.preventDefault();
+  switch (e.target.value) {
     case 'air-horn':
+      // console.log(assets/images/air-horn.svg); 
       changeImage(image, assets/images/air-horn.svg); 
       changeAudio(audio, assets/audio/air-horn.mp3);
       break;
@@ -54,7 +63,11 @@ function changeAudio(aux, source) {
 
 // Play Button is Clicked
 function clickPlayButton() {
-
   // code to run when the event is triggered
+}
 
+// multi function run
+function btnClick(e) {
+  e.preventDefault();
+  hornChangeEvent(e);
 }
