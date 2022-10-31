@@ -23,10 +23,14 @@ function init() {
    *    actually load after the DOM, so if you don't wait the
    *    voice array will be empty.
    */
+  var parentElement = voiceSelect;
+  var voices;
   window.speechSynthesis.addEventListener("voiceschanged", function() {
-    // var parentElement = option;      // POSSIBLY REMOVE !!!!!
-    var parentElement = voiceSelect;
-    window.speechSynthesis.getVoices().forEach(function(voice) {
+    // Initialize Voices
+    voices = window.speechSynthesis.getVoices();
+
+    // Add a new HTML Option for each voice
+    voices.forEach(function(voice) {
       var childElement = document.createElement("option");
       var childText = document.createTextNode(voice.name);
 
@@ -40,13 +44,15 @@ function init() {
   });
   
   /* Update Current Voice Selection Event Listener.
-   *   - We are changing the voiceSelect variable in order
-   *   to keep track of the voice to play when Press to Talk
-   *   is pressed.
+   *   - We are changing the currentVoiceSelection variable to
+   *   be the index of the voice that is currently selected.
    */
-  var currentVoiceSelection;
+  var currentVoiceSelectionIndex;
   voiceSelect.addEventListener('change', function (event) {
-    currentVoiceSelection = event;
+    currentVoiceSelectionIndex = voiceSelect.options[voiceSelect.selectedIndex].index
+
+    // Just leaving in this debug line, which tells the value of the selection:
+    //console.log(voiceSelect.options[voiceSelect.selectedIndex].value);
   });
 
   /* Play Text on Press to Talk Event Listener
@@ -57,8 +63,11 @@ function init() {
    */
   var text2Speech = new SpeechSynthesisUtterance();
   pressToTalk.addEventListener('click', function () {
-    // Grab Current Text
+    // Grab Current Text from txtArea
     text2Speech.text = txtArea.value;
+
+    // Set Voice Selection
+    text2Speech.voice = voices[currentVoiceSelectionIndex];
 
     // Play Text to Speech
     window.speechSynthesis.speak(text2Speech);
