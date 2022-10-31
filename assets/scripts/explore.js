@@ -59,7 +59,7 @@ function init() {
    *   - When the Press to Talk button is clicked we will
    *   first grab the text from the text box element, and
    *   then play the text2speech according to the currently
-   *   selected voice.
+   *   selected voice index using voices array.
    */
   var text2Speech = new SpeechSynthesisUtterance();
   pressToTalk.addEventListener('click', function () {
@@ -67,7 +67,8 @@ function init() {
     text2Speech.text = txtArea.value;
 
     // Set Voice Selection
-    text2Speech.voice = voices[currentVoiceSelectionIndex];
+    //   - Subtract 1 because we're not count default selection
+    text2Speech.voice = voices[currentVoiceSelectionIndex - 1];
 
     // Play Text to Speech
     window.speechSynthesis.speak(text2Speech);
